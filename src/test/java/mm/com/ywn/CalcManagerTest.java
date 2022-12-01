@@ -11,6 +11,7 @@ class CalcManagerTest {
     void execute() {
         var exp = "[a]+[b]*([b]-[c])^2$";
 
+
         var a = BigDecimal.valueOf(200);
         var b = BigDecimal.valueOf(100);
         var c = BigDecimal.valueOf(50);
@@ -31,6 +32,8 @@ class CalcManagerTest {
         System.out.println(operand.value().toPlainString());
 
         assert operand.value().equals(result);
+
+
 
 
     }

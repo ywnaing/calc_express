@@ -36,6 +36,7 @@ public class CalcUtility {
         return ch == '+' || ch == '-' || ch == '/' || ch == '*';
     }
 
+    // reference from  https://www.geeksforgeeks.org/infix-to-prefix-conversion-using-two-stacks/
     protected static List<String> infixToRpn(String expression) {
         // Initialising an empty String
         // (for output) and an empty stack
@@ -56,10 +57,7 @@ public class CalcUtility {
             if (letterOrDigit(c)) {
 
                 if (String.valueOf(c).matches("([0-9]*[.])?[0-9]+")) {
-                    System.out.println("digit");
-//                    System.out.println(c);
                     int index = expression.indexOf('$', i);
-//                    System.out.println(index);
                     String variable = expression.substring(i, index);
 
                     i = index + 1;
