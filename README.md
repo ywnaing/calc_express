@@ -27,7 +27,18 @@ Final step is to call the execute method.
         var operand = calcManager.execute(exp, "Result");
         // value = operand.value()
         // key = operand.key()
+## Download
+For gradle:
 
+```
+repositories {
+    maven {
+       url =  uri("https://s01.oss.sonatype.org/content/groups/public/")
+    }
+}
+
+compile 'io.github.yewintnaing05:calc-express:1.0-SNAPSHOT'
+```
 ## License
 
 ```
