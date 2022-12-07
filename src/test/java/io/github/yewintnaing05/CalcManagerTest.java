@@ -1,4 +1,4 @@
-package mm.com.ywn;
+package io.github.yewintnaing05;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ class CalcManagerTest {
 
     @Test
     void execute() {
-        var exp = "[a]+[b]*([b]-[c])^2$";
+        var exp = "a+b*(b-c)^2";
 
 
         var a = BigDecimal.valueOf(200);
@@ -32,9 +32,6 @@ class CalcManagerTest {
         System.out.println(operand.value().toPlainString());
 
         assert operand.value().equals(result);
-
-
-
 
     }
 }

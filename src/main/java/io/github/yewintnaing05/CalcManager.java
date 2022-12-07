@@ -1,4 +1,4 @@
-package mm.com.ywn;
+package io.github.yewintnaing05;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class CalcManager {
     }
 
 
-    Operand execute(String expression, String outputKey) {
+    public Operand execute(String expression, String outputKey) {
         List<String> postFix = CalcUtility.infixToRpn(expression);
 
         return calculate(postFix, outputKey);

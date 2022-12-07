@@ -1,8 +1,8 @@
-package mm.com.ywn;
+package io.github.yewintnaing05;
 
 import java.math.BigDecimal;
 
-record Operand(
+public record Operand(
         String key,
         BigDecimal value
 ) {

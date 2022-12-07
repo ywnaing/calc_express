@@ -1,13 +1,30 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
-group 'mm.com.ywn'
+group 'io.github.yewintnaing05'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+// -------------------------------------
+// here 'publishing' extension will come
+// -------------------------------------
+
+
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
 }
 
 dependencies {
@@ -17,4 +34,61 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'calc-express'
+            pom {
+                name = 'Calc Expression'
+                packaging = 'jar'
+                // optionally artifactId can be defined here
+                description = 'calc_express is to calculate the dynamic mathematical expressions string in java.'
+                url = 'https://github.com/YeWintNaing05/calc_express'
+                from components.java
+
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'yewintnaing'
+                        name = 'yewintnaing'
+                        email = 'yewintt.naing@gmail.com'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/YeWintNaing05/calc_express'
+
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+
+            credentials {
+                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
+                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+            }
+        }
+    }
+}
+
+
+signing {
+    afterEvaluate { project ->
+        required { isReleaseVersion && gradle.taskGraph.hasTask("publish") }
+        sign publishing.publications.mavenJava
+    }
 }

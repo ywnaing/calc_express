@@ -1,4 +1,4 @@
-package mm.com.ywn;
+package io.github.yewintnaing05;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -22,7 +22,7 @@ class DefaultCalcExpress implements ICalcExpress {
                 if (token.matches("([0-9]*[.])?[0-9]+")) {
                     operandStack.push(new BigDecimal(token));
                 } else {
-                    operandStack.push(operandStorage.get(token).value());
+                    operandStack.push(operandStorage.get(token.trim()).value());
                 }
             } else {
                 // if it's an operator, get the 2 elements at the top and perform the right operation.
