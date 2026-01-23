@@ -11,6 +11,43 @@ ExprEval is a lightweight, high-performance mathematical expression evaluation l
 - **Security Limits**: Defend against DoS with limits on expression length, token count, and nesting depth.
 - **Thread-safe**: Designed for concurrent use.
 
+## Installation
+
+### Maven
+
+Add the JitPack repository and dependency to your `pom.xml`:
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.jdev-yewintnaing</groupId>
+        <artifactId>calc_express</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
+```
+
+### Gradle
+
+Add the JitPack repository and dependency to your `build.gradle`:
+
+```gradle
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.jdev-yewintnaing:calc_express:1.0.0'
+}
+```
+
 ## Quick Start
 
 ```java
