@@ -1,63 +1,63 @@
-# Calculation Math Expression
-calc_express is to calculate the dynamic mathematical expressions string in java.
+# ExprEval
 
+ExprEval is a lightweight, high-performance mathematical expression evaluation library for Java 23+. It supports basic arithmetic, functions, and named operands with configurable security limits.
 
-## Usage
-Firstly, create the CalcManager using Builder Class.
+## Features
 
-        CalcManager calcManager = new CalcManager.CalcManagerBuilder()
-                .build();
+- **Java 23+**: Uses modern language features like records and switch expressions.
+- **Reverse Polish Notation (RPN)**: Robust evaluation engine.
+- **Named Operands**: Use variables in your expressions.
+- **Math Functions**: Built-in support for `sqrt`, `abs`, `neg`, `round`, `floor`, `ceil`, and `pow10`.
+- **Security Limits**: Defend against DoS with limits on expression length, token count, and nesting depth.
+- **Thread-safe**: Designed for concurrent use.
 
-Default does not save in the storage after calculation. You can enable in builder as below.
-        
-        CalcManager calcManager = new CalcManager.CalcManagerBuilder()
-                .enableSaveInStorage(true)
-                .build();
+## Quick Start
 
-        var exp = "a+b*(b-c)^2";
+```java
+// Initialize the calculator
+ExpressionCalculator calculator = new ExpressionCalculator.Builder()
+        .autoSave(true)
+        .build();
 
-For the above exp, value of a, b, c need to be added in the storage.
-        
-        calcManager.getOperandStorage().add(new Operand("a", new BigDecimal("200")));
-        calcManager.getOperandStorage().add(new Operand("b", new BigDecimal("100")));
-        calcManager.getOperandStorage().add(new Operand("c", new BigDecimal(50)));
+// Add some data to storage
+calculator.getStorage().add(new Operand("tax_rate", new BigDecimal("0.15")));
+calculator.getStorage().add(new Operand("price", new BigDecimal("100")));
 
-Final step is to call the execute method.
-    
-        var operand = calcManager.execute(exp, "Result");
-        // value = operand.value()
-        // key = operand.key()
-## Download
-For gradle:
+// Calculate
+CalculationResult result = calculator.calculate("price * (1 + tax_rate)", "total_price");
 
+System.out.println("Result: " + result.value()); // 115.0000
+System.out.println("Execution time: " + result.durationMs() + "ms");
 ```
-repositories {
-    maven {
-       url =  uri("https://s01.oss.sonatype.org/content/groups/public/")
-    }
-}
 
-compile 'io.github.yewintnaing05:calc-express:1.0-SNAPSHOT'
+## Security
+
+ExprEval allows you to configure security limits to prevent resource exhaustion:
+
+```java
+CalculatorConfig config = new CalculatorConfig(
+    500,  // maxExpressionLength
+    50,   // maxTokenCount
+    5     // maxDepth
+);
+
+ExpressionCalculator calculator = new ExpressionCalculator.Builder()
+    .config(config)
+    .build();
 ```
+
+## Mathematical Functions
+
+| Function | Description | Example |
+|---|---|---|
+| `sqrt(x)` | Square root | `sqrt(25)` -> 5 |
+| `abs(x)` | Absolute value | `abs(-10)` -> 10 |
+| `neg(x)` | Negation | `neg(5)` -> -5 |
+| `round(x)` | Round to nearest integer | `round(2.6)` -> 3 |
+| `floor(x)` | Round down | `floor(2.9)` -> 2 |
+| `ceil(x)` | Round up | `ceil(2.1)` -> 3 |
+| `pow10(x)`| Power of 10 | `pow10(2)` -> 100 |
+
 ## License
 
-```
-Copyright 2022 Ye Wint Naing
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
-
-
-  
-
-
+MIT

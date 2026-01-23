@@ -2,16 +2,23 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
+    id 'jacoco'
+    id 'checkstyle'
+    id 'pmd'
+    id 'com.github.spotbugs' version '6.0.7'
 }
 
-group 'io.github.yewintnaing05'
-version '1.0-SNAPSHOT'
+group 'dev.yewintnaing'
+version '1.0.0'
 
 repositories {
     mavenCentral()
 }
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
     withJavadocJar()
     withSourcesJar()
 }
@@ -28,26 +35,90 @@ tasks.withType(Sign) {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
+    testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.14'
 }
 
+// Test configuration
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+// JaCoCo configuration
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80
+            }
+        }
+    }
+}
+
+// Checkstyle configuration
+checkstyle {
+    toolVersion = '10.12.5'
+    configFile = file("${rootDir}/checkstyle.xml")
+    ignoreFailures = false
+}
+
+tasks.withType(Checkstyle) {
+    enabled = file("${rootDir}/checkstyle.xml").exists()
+}
+
+// PMD configuration
+pmd {
+    toolVersion = '6.55.0'
+    ruleSets = []
+    ruleSetFiles = files("${rootDir}/pmd-ruleset.xml")
+    ignoreFailures = false
+}
+
+tasks.withType(Pmd) {
+    enabled = file("${rootDir}/pmd-ruleset.xml").exists()
+}
+
+// SpotBugs configuration
+spotbugs {
+    ignoreFailures = true
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    enabled = false
+    reports {
+        html.required = true
+        xml.required = false
+    }
 }
 
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'calc-express'
+            artifactId = 'expreval'
+            from components.java
             pom {
-                name = 'Calc Expression'
-                packaging = 'jar'
-                // optionally artifactId can be defined here
-                description = 'calc_express is to calculate the dynamic mathematical expressions string in java.'
-                url = 'https://github.com/YeWintNaing05/calc_express'
-                from components.java
+                name = 'ExprEval'
+                description = 'ExprEval is a modern Java 23 library for evaluating dynamic mathematical expressions.'
+                url = 'https://github.com/jdev-yewintnaing/calc_express'
 
 
                 licenses {
@@ -64,7 +135,7 @@ publishing {
                     }
                 }
                 scm {
-                    url = 'https://github.com/YeWintNaing05/calc_express'
+                    url = 'https://github.com/jdev-yewintnaing/calc_express'
 
                 }
             }
@@ -72,16 +143,14 @@ publishing {
     }
     repositories {
         maven {
-            // change URLs to point to your repos, e.g. http://my.org/repo
-            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = isReleaseVersion ? releaseRepo : snapshotRepo
-
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/jdev-yewintnaing/calc_express")
             credentials {
-                username = project.hasProperty('ossrhUsername') ? ossrhUsername : "Unknown user"
-                password = project.hasProperty('ossrhPassword') ? ossrhPassword : "Unknown password"
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
+
     }
 }
 
