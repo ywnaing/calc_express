@@ -35,7 +35,7 @@ jobs:
         run: ./gradlew test --no-daemon
 
       - name: Publish to GitHub Packages
-        if: github.event_name == 'release' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+        if: github.event_name == 'release'
         run: ./gradlew publish --no-daemon
         env:
           GITHUB_ACTOR: ${{ github.actor }}
