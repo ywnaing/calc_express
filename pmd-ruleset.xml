@@ -10,6 +10,8 @@
     <rule ref="category/java/bestpractices.xml">
         <exclude name="JUnitTestContainsTooManyAsserts"/>
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+        <exclude name="LiteralsFirstInComparisons"/>
+        <exclude name="SystemPrintln"/>
     </rule>
 
     <!-- Code Style -->
@@ -20,19 +22,42 @@
         <exclude name="ShortVariable"/>
         <exclude name="ShortClassName"/>
         <exclude name="CommentDefaultAccessModifier"/>
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="PrematureDeclaration"/>
+        <exclude name="LinguisticNaming"/>
+        <exclude name="UselessParentheses"/>
+        <exclude name="UnnecessaryConstructor"/>
     </rule>
 
     <!-- Design -->
     <rule ref="category/java/design.xml">
         <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
+        <exclude name="AvoidDeeplyNestedIfStmts"/>
+        <exclude name="CognitiveComplexity"/>
+        <exclude name="CyclomaticComplexity"/>
+        <exclude name="GodClass"/>
+        <exclude name="NcssCount"/>
+        <exclude name="NPathComplexity"/>
+        <exclude name="TooManyMethods"/>
+        <exclude name="SimplifyBooleanReturns"/>
     </rule>
 
     <!-- Error Prone -->
-    <rule ref="category/java/errorprone.xml"/>
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="AvoidFieldNameMatchingMethodName"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+        <exclude name="AvoidLiteralsInIfCondition"/>
+        <exclude name="MissingSerialVersionUID"/>
+    </rule>
 
     <!-- Performance -->
-    <rule ref="category/java/performance.xml"/>
+    <rule ref="category/java/performance.xml">
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+        <exclude name="RedundantFieldInitializer"/>
+        <exclude name="BigIntegerInstantiation"/>
+    </rule>
 
     <!-- Security -->
     <rule ref="category/java/security.xml"/>

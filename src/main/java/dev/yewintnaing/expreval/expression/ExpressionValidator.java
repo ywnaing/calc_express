@@ -5,18 +5,21 @@ import dev.yewintnaing.expreval.exception.InvalidExpressionException;
 import java.util.Stack;
 
 /**
- * Validates mathematical expressions before they are evaluated.
+ * Validates mathematical expressions before they are tokenized and evaluated.
  */
-public class ExpressionValidator {
+public final class ExpressionValidator {
+
+    private ExpressionValidator() {
+        // Utility class constructor
+    }
 
     /**
      * Validates that the expression has balanced parentheses and respects security
-     * limits.
+     * limits configured in {@link CalculatorConfig}.
      *
      * @param expression The expression to validate
      * @param config     The configuration with limits
-     * @throws InvalidExpressionException if the expression is invalid or exceeds
-     *                                    limits
+     * @throws InvalidExpressionException if the expression is invalid or exceeds limits
      */
     public static void validate(String expression, CalculatorConfig config) {
         if (expression == null || expression.isBlank()) {
@@ -51,6 +54,9 @@ public class ExpressionValidator {
                 }
                 stack.pop();
                 currentDepth--;
+            } else if (c == ',' && currentDepth == 0) {
+                throw new InvalidExpressionException(
+                        "Comma cannot appear outside of function parentheses at position " + i);
             }
         }
         if (!stack.isEmpty()) {

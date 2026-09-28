@@ -17,7 +17,7 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+        languageVersion = JavaLanguageVersion.of(17)
     }
     withJavadocJar()
     withSourcesJar()
@@ -117,7 +117,7 @@ publishing {
             from components.java
             pom {
                 name = 'ExprEval'
-                description = 'ExprEval is a modern Java 23 library for evaluating dynamic mathematical expressions.'
+                description = 'ExprEval is a modern Java 17 library for evaluating dynamic mathematical expressions.'
                 url = 'https://github.com/jdev-yewintnaing/calc_express'
 
 

@@ -16,6 +16,12 @@ import java.util.Objects;
 public record Operand(
         String key,
         BigDecimal value) {
+    /**
+     * Constructs a valid Operand with non-null key and value.
+     *
+     * @param key   The unique identifier for this operand.
+     * @param value The numerical value associated with the key.
+     */
     public Operand {
         Objects.requireNonNull(key, "Operand key cannot be null");
         Objects.requireNonNull(value, "Operand value cannot be null");
