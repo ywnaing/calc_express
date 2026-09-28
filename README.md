@@ -29,7 +29,7 @@ Add the JitPack repository and dependency to your `pom.xml`:
 
 <dependencies>
     <dependency>
-        <groupId>com.github.jdev-yewintnaing</groupId>
+        <groupId>com.github.ywnaing</groupId>
         <artifactId>calc_express</artifactId>
         <version>1.1.0</version>
     </dependency>
@@ -46,7 +46,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.jdev-yewintnaing:calc_express:1.1.0'
+    implementation 'com.github.ywnaing:calc_express:1.1.0'
 }
 ```
 

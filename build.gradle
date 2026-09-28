@@ -118,7 +118,7 @@ publishing {
             pom {
                 name = 'ExprEval'
                 description = 'ExprEval is a modern Java 17 library for evaluating dynamic mathematical expressions.'
-                url = 'https://github.com/jdev-yewintnaing/calc_express'
+                url = 'https://github.com/ywnaing/calc_express'
 
 
                 licenses {
@@ -135,7 +135,7 @@ publishing {
                     }
                 }
                 scm {
-                    url = 'https://github.com/jdev-yewintnaing/calc_express'
+                    url = 'https://github.com/ywnaing/calc_express'
 
                 }
             }
@@ -144,7 +144,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/jdev-yewintnaing/calc_express")
+            url = uri("https://maven.pkg.github.com/ywnaing/calc_express")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
